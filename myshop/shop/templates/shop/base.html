@@ -1,0 +1,46 @@
+{% load i18n %}
+{% load static %}
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>{% block title %}{% trans "Pizza Shop" %}{% endblock %}</title>
+  <link href='{% static "css/base.css" %}' rel="stylesheet">
+</head>
+<body>
+  <div id="header">
+    <a href="/" class="logo">{% trans "GAGAGA PIzza Shop" %}</a>
+    <div>{% trans "" %}</div>
+  </div>
+
+
+
+   <div id="subheader">
+    <div class="cart">
+      {% with total_items=cart|length %}
+          {% if cart|length > 0 %}
+            {% trans "Your cart" %}
+            <a href='{% url "cart:cart_detail" %}'>
+              {% blocktrans with total_items_plural=total_items|pluralize  total_price=cart.get_total_price %}
+                {{ total_items }} item{{ total_items_plural }},
+                ${{ total_price }}
+              {% endblocktrans %}
+            </a>
+          {% else %}
+            {% trans "Your cart is empty." %}
+          {% endif %}
+      {% endwith %}
+    </div>
+  </div>
+
+  <div id="content">
+    {% block content %}
+    {% endblock %}
+  </div>
+  <div>
+    <footer>
+      <h1 contenteditable spellcheck="false">GAGAGA Pizza  2022. Ordering pizza at home or to the office: free delivery. All rights reserved. Our price. GAGAGA is recommended.</h1>
+      <a href="https://vk.com/wskmy">{% trans "Feedback"  %}</a>
+    </footer>
+  </div>
+</body>
+</html>
